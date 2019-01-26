@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class Tracer : MonoBehaviour
 {
-    public Transform currentStar;
-
     public Transform CurrentStar { get; set; }
     public bool Landed { get; set; }
 
     private TracerMotor _motor;
     private StarLinker _linker;
+    private StarCollection _collectedStars;
 
     void Awake()
     {
-        CurrentStar = currentStar;
+        CurrentStar = transform.parent;
 
         _motor = GetComponent<TracerMotor>();
         _linker = GetComponent<StarLinker>();
+        _collectedStars = GameObject.FindObjectOfType<StarCollection>();
     }
 
     public void Launch(Vector3 velocity)
@@ -26,14 +26,27 @@ public class Tracer : MonoBehaviour
         _motor.Launch(velocity);
     }
 
-    public void ChangeStar(GameObject star)
-    {
-        CurrentStar = star.transform;
-        _linker.EndActiveLink();
-    }
-
-    public void Land()
+    public void Land(GameObject starGO)
     {
         Landed = true;
+
+        CurrentStar = starGO.transform;
+        transform.SetParent(CurrentStar);
+        transform.localPosition = Vector3.zero;
+        Star star = CurrentStar.GetComponent<Star>();
+
+        if(star != null)
+        {
+            star.ReceiveLink();
+            _collectedStars.AddStar(star);
+        }
+
+        //_linker.EndActiveLink();
+    }
+
+    public void CollectStars()
+    {
+        Land(_collectedStars.gameObject);
+        _collectedStars.CollectStars();
     }
 }

@@ -18,14 +18,12 @@ public class PlayerInput : MonoBehaviour
         _launchPower = _launchSettings.minLaunchPower;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         _currentTransform = GetComponent<Transform>();
         _launchPower = _launchSettings.minLaunchPower;
     }
 
-    // Update is called once per frame
     void Update()
     {
         RotateTowardMouse();
@@ -39,6 +37,11 @@ public class PlayerInput : MonoBehaviour
             if(Input.GetMouseButtonUp(0))
             {
                 Launch();
+            }
+
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                _tracer.CollectStars();
             }
         }
     }

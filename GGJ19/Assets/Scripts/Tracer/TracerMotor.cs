@@ -45,17 +45,10 @@ public class TracerMotor : MonoBehaviour
         _collider.enabled = true;
     }
 
-    public void ChangeStar(GameObject starGO)
+    private void Land(GameObject starGO)
     {
-        _tracer.ChangeStar(starGO);
-        Land();
-    }
-
-    private void Land()
-    {
-        _tracer.Land();
+        _tracer.Land(starGO);
         _collider.enabled = false;
-        transform.position = _tracer.CurrentStar.position;
         _rigidbody.velocity = Vector2.zero;
     }
 
@@ -68,16 +61,9 @@ public class TracerMotor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if(collider.gameObject == _tracer.CurrentStar.gameObject)
+        if(collider.gameObject != _tracer.CurrentStar.gameObject || _isReturning)
         {
-            if(_isReturning)
-            {
-                Land();
-            }
-        }
-        else
-        {
-            ChangeStar(collider.gameObject);
+            Land(collider.gameObject);
         }
     }
 
