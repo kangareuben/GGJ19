@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class TracerMotor : MonoBehaviour
 {
-    public bool Landed { get; private set; }
-
     [SerializeField]
     private Settings _motorSettings;
 
@@ -28,7 +26,7 @@ public class TracerMotor : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(!Landed)
+        if(!_tracer.Landed)
         {
             _rigidbody.velocity -= new Vector2(Gravity().x, Gravity().y);
 
@@ -42,35 +40,35 @@ public class TracerMotor : MonoBehaviour
     public void Launch(Vector3 velocity)
     {
         _rigidbody.velocity = velocity;
-        Landed = false;
+        _tracer.Landed = false;
         _isReturning = false;
         _collider.enabled = true;
     }
 
     public void ChangeStar(GameObject starGO)
     {
-        _tracer.CurrentNode = starGO.transform;
+        _tracer.ChangeStar(starGO);
         Land();
     }
 
     private void Land()
     {
-        Landed = true;
+        _tracer.Land();
         _collider.enabled = false;
-        transform.position = _tracer.CurrentNode.position;
+        transform.position = _tracer.CurrentStar.position;
         _rigidbody.velocity = Vector2.zero;
     }
 
     private Vector3 Gravity()
     {
-        Vector3 dir = transform.position - _tracer.CurrentNode.position;
+        Vector3 dir = transform.position - _tracer.CurrentStar.position;
 
         return dir.normalized * _motorSettings.gravity;
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if(collider.gameObject == _tracer.CurrentNode.gameObject)
+        if(collider.gameObject == _tracer.CurrentStar.gameObject)
         {
             if(_isReturning)
             {
@@ -87,5 +85,6 @@ public class TracerMotor : MonoBehaviour
     private struct Settings
     {
         public float gravity;
+        public float gravityScaling;
     }
 }
