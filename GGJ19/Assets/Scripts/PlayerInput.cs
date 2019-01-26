@@ -16,12 +16,15 @@ public class PlayerInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _currentTransform = GetComponent<Transform>();
         _launchPower = _launchSettings.minLaunchPower;
     }
 
     // Update is called once per frame
     void Update()
     {
+        RotateTowardMouse();
+
         if(Input.GetMouseButton(0) && !_tracer.Active)
         {
             ChargeLaunch();
@@ -30,6 +33,15 @@ public class PlayerInput : MonoBehaviour
         {
             FireTrace();
         }
+    }
+
+    private void RotateTowardMouse()
+    {
+        Vector3 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        diff.Normalize();
+
+        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
     }
 
     private void ChargeLaunch()

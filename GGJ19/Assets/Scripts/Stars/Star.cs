@@ -6,7 +6,8 @@ public class Star : MonoBehaviour
 {
     private Tracer _tracer;
 
-    void Awake() {
+    void Awake()
+    {
         _tracer = GetComponentInChildren<Tracer>();
     }
 
