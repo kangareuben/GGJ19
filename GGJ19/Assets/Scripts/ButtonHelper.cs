@@ -7,13 +7,13 @@ using UnityEngine.UI;
 public class ButtonHelper : MonoBehaviour
 {
     [SerializeField]
-    private Slider gameSpeedSlider;
+    private Slider _gameSpeedSlider;
     [SerializeField]
-    private TextMeshProUGUI gameSpeedLabel;
+    private TextMeshProUGUI _gameSpeedLabel;
 
     public void SetGameSpeed()
     {
-        GameManager.instance.SetGameSpeed(gameSpeedSlider.value);
-        gameSpeedLabel.text = "Game Speed: " + gameSpeedSlider.value.ToString("F1");
+        GameManager.instance.SetGameSpeed(_gameSpeedSlider.value);
+        _gameSpeedLabel.text = "Game Speed: " + _gameSpeedSlider.value.ToString("F1");
     }
 }

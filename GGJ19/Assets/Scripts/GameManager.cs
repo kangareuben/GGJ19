@@ -6,14 +6,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    private float gameSpeed;
+    private float _gameSpeed;
 
     public float GameSpeed
     {
         set
         {
-            gameSpeed = value;
-            Time.timeScale = gameSpeed;
+            _gameSpeed = value;
+            Time.timeScale = _gameSpeed;
         }
     }
 
