@@ -10,9 +10,4 @@ public class Star : MonoBehaviour
     {
         _tracer = GetComponentInChildren<Tracer>();
     }
-
-    public void FireTracer(Vector3 velocity)
-    {
-        _tracer.Launch(velocity);
-    }
 }

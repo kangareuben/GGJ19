@@ -5,13 +5,18 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     [SerializeField]
-    private Tracer _tracer;
-    [SerializeField]
     private LaunchSettings _launchSettings;
 
+    private TracerMotor _motor;
     private Transform _currentTransform;
 
     private float _launchPower;
+
+    void Awake()
+    {
+        _motor = GetComponent<TracerMotor>();
+        _launchPower = _launchSettings.minLaunchPower;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -25,13 +30,16 @@ public class PlayerInput : MonoBehaviour
     {
         RotateTowardMouse();
 
-        if(Input.GetMouseButton(0) && !_tracer.Active)
+        if(_motor.Landed)
         {
-            ChargeLaunch();
-        }
-        if(Input.GetMouseButtonUp(0))
-        {
-            FireTrace();
+            if(Input.GetMouseButton(0))
+            {
+                ChargeLaunch();
+            }
+            if(Input.GetMouseButtonUp(0))
+            {
+                Launch();
+            }
         }
     }
 
@@ -50,15 +58,14 @@ public class PlayerInput : MonoBehaviour
         _launchPower = Mathf.Min(_launchPower, _launchSettings.maxLaunchPower);
     }
 
-    private void FireTrace()
+    private void Launch()
     {
-        Debug.Log("Firing with power: " + _launchPower);
         Vector3 transformScreenPos = Camera.main.WorldToScreenPoint(transform.position);
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Vector3 direction = Vector3.Normalize(Input.mousePosition - transformScreenPos);
 
-        _tracer.Launch(direction * _launchPower);
+        _motor.Launch(direction * _launchPower);
 
         _launchPower = _launchSettings.minLaunchPower;
     }
