@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    public float LaunchPower { get; private set; }
+    public Settings LaunchSettings { get { return _launchSettings; } }
     [SerializeField]
-    private LaunchSettings _launchSettings;
+    private Settings _launchSettings;
 
     private Tracer _tracer;
     private Transform _currentTransform;
 
-    private float _launchPower;
-
     void Awake()
     {
         _tracer = GetComponent<Tracer>();
-        _launchPower = _launchSettings.minLaunchPower;
+        LaunchPower = _launchSettings.minLaunchPower;
     }
 
     void Start()
     {
         _currentTransform = GetComponent<Transform>();
-        _launchPower = _launchSettings.minLaunchPower;
+        LaunchPower = _launchSettings.minLaunchPower;
     }
 
     void Update()
@@ -57,8 +57,8 @@ public class PlayerInput : MonoBehaviour
 
     private void ChargeLaunch()
     {
-        _launchPower += _launchSettings.launchScaleRate * Time.deltaTime;
-        _launchPower = Mathf.Min(_launchPower, _launchSettings.maxLaunchPower);
+        LaunchPower += _launchSettings.launchScaleRate * Time.deltaTime;
+        LaunchPower = Mathf.Min(LaunchPower, _launchSettings.maxLaunchPower);
     }
 
     private void Launch()
@@ -68,13 +68,13 @@ public class PlayerInput : MonoBehaviour
 
         Vector3 direction = Vector3.Normalize(Input.mousePosition - transformScreenPos);
 
-        _tracer.Launch(direction * _launchPower);
+        _tracer.Launch(direction * LaunchPower);
 
-        _launchPower = _launchSettings.minLaunchPower;
+        LaunchPower = _launchSettings.minLaunchPower;
     }
 
     [System.Serializable]
-    private struct LaunchSettings
+    public struct Settings
     {
         public float minLaunchPower;
         public float maxLaunchPower;
