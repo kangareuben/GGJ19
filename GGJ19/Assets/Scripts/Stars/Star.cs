@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Star : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    private Tracer _tracer;
+
+    void Awake() {
+        _tracer = GetComponentInChildren<Tracer>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void FireTracer(Vector3 velocity)
     {
-        
+        _tracer.Launch(velocity);
     }
 }
