@@ -45,7 +45,11 @@ public class StarCollection : MonoBehaviour
         }
 
         _score.AddStars(_starCollection);
-        _timer.AddTime(_starCollection.Count + 2);
+
+        if(_starCollection.Count > 0)
+        {
+            _timer.AddTime(_starCollection.Count + 2);
+        }
 
         _totalCollected += _starCollection.Count;
 
