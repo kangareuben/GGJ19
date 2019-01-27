@@ -38,6 +38,11 @@ public class ButtonHelper : MonoBehaviour
         SceneManager.LoadScene("Credits");
     }
 
+    public void ToggleMute()
+    {
+        AudioManager._instance.ToggleMute();
+    }
+
     public void PlaySound(int index)
     {
         AudioManager._instance.PlaySound(index);
