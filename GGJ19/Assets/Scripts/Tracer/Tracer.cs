@@ -30,6 +30,12 @@ public class Tracer : MonoBehaviour
     {
         Landed = true;
 
+        StarMovement prevStarMovement = CurrentStar.GetComponent<StarMovement>();
+        if(prevStarMovement != null)
+        {
+            prevStarMovement.Stopped = false;
+        }
+
         CurrentStar = starGO.transform;
         transform.SetParent(CurrentStar);
         transform.localPosition = Vector3.zero;
@@ -39,6 +45,7 @@ public class Tracer : MonoBehaviour
         {
             star.ReceiveLink();
             _collectedStars.AddStar(star);
+            star.GetComponent<StarMovement>().Stopped = true;
         }
 
         //_linker.EndActiveLink();

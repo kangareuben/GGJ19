@@ -9,6 +9,7 @@ public class Star : MonoBehaviour
 
     private SpriteRenderer _sr;
     private Collider2D _collider;
+    private StarMovement _movement;
 
     private bool _collecting;
     private Vector3 _collectionPoint;
@@ -18,13 +19,14 @@ public class Star : MonoBehaviour
     {
         _sr = GetComponentInChildren<SpriteRenderer>();
         _collider = GetComponent<Collider2D>();
+        _movement = GetComponent<StarMovement>();
     }
 
     void Update()
     {
         if(_collecting)
         {
-            transform.position += _collectionDirection * Time.deltaTime;
+            transform.position += _collectionDirection * 2f * Time.deltaTime;
 
             if(Vector3.Distance(transform.position, _collectionPoint) <= 0.5)
             {
@@ -42,6 +44,8 @@ public class Star : MonoBehaviour
     {
         _collecting = true;
         _collider.enabled = false;
+
+        if(_movement != null) { _movement.Stopped = true; }
 
         StartCoroutine(MoveToCollection(collectionPoint));
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,7 +30,6 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
 
-            _timer = GetComponent<Timer>();
             _timer.OnTimeComplete += GameLose;
         }
         else
@@ -46,5 +46,10 @@ public class GameManager : MonoBehaviour
     private void GameLose()
     {
         _gameOverScreen.Display();
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

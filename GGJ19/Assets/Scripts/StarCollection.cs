@@ -5,12 +5,14 @@ using UnityEngine;
 public class StarCollection : MonoBehaviour
 {
     private PlayerScore _score;
+    private Timer _timer;
 
     private List<Star> _starCollection;
 
     void Awake()
     {
         _score = GetComponent<PlayerScore>();
+        _timer = GameObject.FindObjectOfType<Timer>();
         _starCollection = new List<Star>();
     }
 
@@ -32,6 +34,7 @@ public class StarCollection : MonoBehaviour
         }
 
         _score.AddStars(_starCollection);
+        _timer.AddTime(_starCollection.Count + 2);
         
         Clear();
     }
