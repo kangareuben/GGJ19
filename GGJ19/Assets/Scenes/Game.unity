@@ -980,7 +980,7 @@ MonoBehaviour:
   _starPrefab: {fileID: 6545190845676965888, guid: a38754f200193d548a32c0508f40f333,
     type: 3}
   _spawnSettings:
-    startingSpawn: 15
+    startingSpawn: 20
     spawnDelay: 0
     maxSpeed: 1
     minSpeed: -1

@@ -34,6 +34,11 @@ public class StarFactory : MonoBehaviour
                                                 Random.Range(_spawnSettings.spawnBounds.y, _spawnSettings.spawnBounds.y + _spawnSettings.spawnBounds.height),
                                                 0);
 
+        if(Vector3.Distance(Vector3.zero, starGO.transform.position) < 1f)
+        {
+            starGO.transform.Translate(2f, 2f, 0f);
+        }
+
 
         StarMovement movement = starGO.GetComponent<StarMovement>();
         Vector3 velocity = new Vector3(Random.Range(_spawnSettings.minSpeed, _spawnSettings.maxSpeed),
