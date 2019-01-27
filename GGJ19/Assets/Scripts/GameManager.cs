@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     private Timer _timer;
     [SerializeField]
     private GameOverScreen _gameOverScreen;
+    [SerializeField]
+    private PlayerScore _score;
 
     public float GameSpeed
     {
@@ -30,7 +32,7 @@ public class GameManager : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(gameObject);
 
-            _timer.OnTimeComplete += GameLose;
+            _timer.OnTimeComplete += GameOver;
         }
         else
         {
@@ -43,18 +45,24 @@ public class GameManager : MonoBehaviour
         GameSpeed = speed;
     }
 
-    private void GameLose()
+    public void GameOver()
     {
+        SaveHighScore();
         _gameOverScreen.Display();
-    }
-
-    public void Restart()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void MainMenu()
     {
-        
+
+    }
+
+    private void SaveHighScore()
+    {
+        int score = GameObject.FindObjectOfType<PlayerScore>().Score;
+
+        if(!PlayerPrefs.HasKey("high_score") || score > PlayerPrefs.GetInt("high_score"))
+        {
+            PlayerPrefs.SetInt("high_score", score);
+        }
     }
 }

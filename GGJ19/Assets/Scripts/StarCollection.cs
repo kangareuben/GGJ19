@@ -7,13 +7,19 @@ public class StarCollection : MonoBehaviour
     private PlayerScore _score;
     private Timer _timer;
 
+    private StarFactory _starFactory;
     private List<Star> _starCollection;
+
+    private int _totalCollected;
 
     void Awake()
     {
         _score = GetComponent<PlayerScore>();
         _timer = GameObject.FindObjectOfType<Timer>();
+        _starFactory = GameObject.FindObjectOfType<StarFactory>();
         _starCollection = new List<Star>();
+
+        _totalCollected = 0;
     }
 
     public void AddStar(Star newStar)
@@ -40,6 +46,13 @@ public class StarCollection : MonoBehaviour
 
         _score.AddStars(_starCollection);
         _timer.AddTime(_starCollection.Count + 2);
+
+        _totalCollected += _starCollection.Count;
+
+        if(_totalCollected >= _starFactory.SpawnSettings.startingSpawn)
+        {
+            GameManager._instance.GameOver();
+        }
         
         Clear();
     }

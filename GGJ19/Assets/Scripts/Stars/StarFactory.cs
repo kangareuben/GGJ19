@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StarFactory : MonoBehaviour
 {
+    public Settings SpawnSettings { get { return _spawnSettings; } }
     [SerializeField]
     private GameObject _starPrefab;
 
@@ -43,7 +44,7 @@ public class StarFactory : MonoBehaviour
     }
 
     [System.Serializable]
-    private struct Settings
+    public struct Settings
     {
         public int startingSpawn;
         public float spawnDelay;
