@@ -45,8 +45,11 @@ public class StarLinker : MonoBehaviour
 
     private void ScaleToPoint(Vector3 point)
     {
-        Vector3 tempScale = _activeLink.transform.localScale;
-        tempScale.x = (_activeLink.transform.position - point).magnitude * 1.5f;
-        _activeLink.transform.localScale = tempScale;
+        if(_activeLink != null)
+        {
+            Vector3 tempScale = _activeLink.transform.localScale;
+            tempScale.x = (_activeLink.transform.position - point).magnitude/* * 1.5f*/;
+            _activeLink.transform.localScale = tempScale;
+        }
     }
 }
