@@ -40,6 +40,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(_timer == null)
+        {
+            if(GameObject.FindGameObjectWithTag("Timer") != null)
+            {
+                _timer = GameObject.FindGameObjectWithTag("Timer").GetComponent<Timer>();
+                _timer.OnTimeComplete += GameOver;
+            }
+        }
+    }
+
     public void SetGameSpeed(float speed)
     {
         GameSpeed = speed;

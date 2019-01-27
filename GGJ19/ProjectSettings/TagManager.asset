@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Home
   - Canvas
+  - GameOverScreen
+  - Timer
   layers:
   - Default
   - TransparentFX
