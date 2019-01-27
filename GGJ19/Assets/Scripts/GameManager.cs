@@ -8,6 +8,11 @@ public class GameManager : MonoBehaviour
 
     private float _gameSpeed;
 
+    [SerializeField]
+    private Timer _timer;
+    [SerializeField]
+    private GameOverScreen _gameOverScreen;
+
     public float GameSpeed
     {
         set
@@ -23,6 +28,9 @@ public class GameManager : MonoBehaviour
         {
             _instance = this;
             DontDestroyOnLoad(gameObject);
+
+            _timer = GetComponent<Timer>();
+            _timer.OnTimeComplete += GameLose;
         }
         else
         {
@@ -33,5 +41,10 @@ public class GameManager : MonoBehaviour
     public void SetGameSpeed(float speed)
     {
         GameSpeed = speed;
+    }
+
+    private void GameLose()
+    {
+        _gameOverScreen.Display();
     }
 }
