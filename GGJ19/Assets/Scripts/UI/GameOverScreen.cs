@@ -14,10 +14,10 @@ public class GameOverScreen : MonoBehaviour
     public void Display()
     {
         gameObject.SetActive(true);
-        _scoreText.text = "Score: " + GameObject.FindObjectOfType<PlayerScore>().Score;
+        _scoreText.text = "score: " + GameObject.FindObjectOfType<PlayerScore>().Score;
         if(PlayerPrefs.HasKey("high_score"))
         {
-            _highScoreText.text = "High Score: " + PlayerPrefs.GetInt("high_score");
+            _highScoreText.text = "high score: " + PlayerPrefs.GetInt("high_score");
         }
     }
 }

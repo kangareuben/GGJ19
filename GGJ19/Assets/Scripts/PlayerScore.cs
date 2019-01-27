@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerScore : MonoBehaviour
@@ -8,6 +9,8 @@ public class PlayerScore : MonoBehaviour
 
     [SerializeField]
     private ScoreSettings _scoreSettings;
+    [SerializeField]
+    private TextMeshProUGUI _scoreText;
 
     public void AddStars(List<Star> stars)
     {
@@ -32,9 +35,9 @@ public class PlayerScore : MonoBehaviour
         Score += newScore * collected.Count;
     }
 
-    void OnGUI()
+    private void Update()
     {
-        GUI.Label(new Rect(10,10,200,100), "Score: " + Score);
+        _scoreText.text = "score: " + Score;
     }
 
     [System.Serializable]

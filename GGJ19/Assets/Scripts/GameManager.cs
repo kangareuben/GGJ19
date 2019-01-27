@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         SaveHighScore();
+
+        _gameOverScreen = GameObject.FindGameObjectWithTag("Canvas").transform.Find("GameOverPanel").gameObject.GetComponent<GameOverScreen>();
         _gameOverScreen.Display();
     }
 
