@@ -9,6 +9,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField]
     private Settings _launchSettings;
 
+    private bool _charging;
     private Tracer _tracer;
     private Transform _currentTransform;
 
@@ -57,12 +58,21 @@ public class PlayerInput : MonoBehaviour
 
     private void ChargeLaunch()
     {
+        if(!_charging)
+        {
+            _charging = true;
+            AudioManager._instance.PlaySound(1);
+        }
+
         LaunchPower += _launchSettings.launchScaleRate * Time.deltaTime;
         LaunchPower = Mathf.Min(LaunchPower, _launchSettings.maxLaunchPower);
     }
 
     private void Launch()
     {
+        _charging = false;
+        AudioManager._instance.PlaySound(2);
+
         Vector3 transformScreenPos = Camera.main.WorldToScreenPoint(transform.position);
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
