@@ -18,7 +18,12 @@ public class StarCollection : MonoBehaviour
 
     public void AddStar(Star newStar)
     {
-        _starCollection.Add(newStar);
+        if(!_starCollection.Contains(newStar))
+        {
+            _starCollection.Add(newStar);
+        }
+
+        AudioManager._instance.PlaySound(Mathf.Min(_starCollection.Count, 7) + 3);
     }
 
     public void Clear()

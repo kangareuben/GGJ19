@@ -9,6 +9,13 @@ public class StarMovement : MonoBehaviour
     [SerializeField]
     private Vector3 _velocity;
 
+    private GameObject _home;
+
+    private void Awake()
+    {
+        _home = GameObject.FindGameObjectWithTag("Home");
+    }
+
     void FixedUpdate()
     {
         if(!Stopped)
@@ -23,6 +30,18 @@ public class StarMovement : MonoBehaviour
             {
                 _velocity.y *= -1;
             }
+
+            RepelFromHome();
+        }
+    }
+
+    private void RepelFromHome()
+    {
+        float distanceFromHome = Vector3.Distance(transform.position, _home.transform.position);
+        if(distanceFromHome < 1.5f)
+        {
+            Vector3 forceDirection = (transform.position - _home.transform.position).normalized / (distanceFromHome * 20);
+            _velocity += forceDirection;
         }
     }
 

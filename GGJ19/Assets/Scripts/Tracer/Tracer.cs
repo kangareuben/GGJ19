@@ -48,7 +48,7 @@ public class Tracer : MonoBehaviour
             star.GetComponent<StarMovement>().Stopped = true;
         }
 
-        //_linker.EndActiveLink();
+        _linker.EndActiveLink();
     }
 
     public void CollectStars()
