@@ -9,6 +9,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private AudioSource[] _audioSources;
 
+    private float musicVolume;
+    private bool _soundOn = true;
+
     private void Awake()
     {
         if(_instance == null)
@@ -24,12 +27,13 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        musicVolume = _audioSources[0].volume;
         PlaySound(0);
     }
 
     public void PlaySound(int index)
     {
-        if(!_audioSources[index].isPlaying)
+        if(!_audioSources[index].isPlaying && _soundOn)
         {
             _audioSources[index].Play();
         }
@@ -38,5 +42,24 @@ public class AudioManager : MonoBehaviour
     public void StopSound(int index)
     {
         _audioSources[index].Stop();
+    }
+
+    public void SetVolume(int index, float volume)
+    {
+        _audioSources[index].volume = volume;
+    }
+
+    public void ToggleMute()
+    {
+        _soundOn = !_soundOn;
+
+        if(!_soundOn)
+        {
+            SetVolume(0, 0f);
+        }
+        else
+        {
+            SetVolume(0, musicVolume);
+        }
     }
 }
